@@ -1,8 +1,13 @@
 import { useState } from 'react'
-import './App.css'
 import { Button } from '@/components/ui/button'
 import { api } from '@/lib/api'
 import { useQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/app/_app/')({
+  component: Index
+})
+
 
 async function getTest() {
   const res = await api.test['hello'].$get()
@@ -13,7 +18,7 @@ async function getTest() {
   return data
 }
 
-function App() {
+function Index() {
   const [count, setCount] = useState(0)
 
   const {data, isPending, error} = useQuery({ queryKey: ['test-example'], queryFn: getTest })
@@ -45,5 +50,3 @@ function App() {
     </>
   )
 }
-
-export default App
