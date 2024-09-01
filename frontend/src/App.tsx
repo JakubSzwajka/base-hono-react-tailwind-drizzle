@@ -1,20 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import { Button } from '@/components/ui/button'
 import { api } from '@/lib/api'
+import { useQuery } from '@tanstack/react-query'
+
+async function getTest() {
+  const res = await api.test['hello'].$get()
+  if (!res.ok) {
+    throw new Error('Failed to fetch')
+  }
+  const data = await res.json()
+  return data
+}
 
 function App() {
   const [count, setCount] = useState(0)
 
-  useEffect(() => {
-    async function fetchData() {
-      const res = await api.test['hello'].$get()
-      const data = await res.json()
-      console.log(data)
-    }
-    fetchData()
-  }, [])
+  const {data, isPending, error} = useQuery({ queryKey: ['test-example'], queryFn: getTest })
 
+  if (isPending) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
+
+  console.log(data)
   return (
     <>
       <Button>Test</Button>
