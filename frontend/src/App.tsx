@@ -1,9 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { Button } from '@/components/ui/button'
+import { api } from '@/lib/api'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await api.test['hello'].$get()
+      const data = await res.json()
+      console.log(data)
+    }
+    fetchData()
+  }, [])
 
   return (
     <>

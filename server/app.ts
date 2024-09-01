@@ -7,26 +7,32 @@ import { serveStatic } from 'hono/bun'
 const app = new Hono();
 const api = new Hono();
 
+app.use(logger());
+
 const testPostSchema = z.object({
   name: z.string(),
   age: z.number(),
 });
 
-api.post(
-    '/test',
+
+const testApi = new Hono();
+const testRoute = testApi.post(
+    '/',
     zValidator('json', testPostSchema),
     async (c) => {
         const { name, age } = c.req.valid('json');
         return c.json({ name, age });
     }
-)
-api.get('/hello', (c) => c.text('Hello, World!'));
+).get('/hello', async (c) => {
+    return c.json({ message: 'Hello, World!' });
+});
 
-app.route('/api', api); 
-app.use(logger());
+const apiRoutes = api.route('/test', testRoute);
 
-
+app.route('/api', apiRoutes);
 app.use('*', serveStatic({ root: './frontend/dist' }))
 app.get('*', serveStatic({ path: './frontend/dist/index.html' }))
 
+
 export default app;
+export type AppType = typeof apiRoutes
