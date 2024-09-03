@@ -7,8 +7,7 @@ export const Route = createFileRoute('/app/_app')({
 
 function AppLayout() {
   return (
-    <div>
-      <div className="flex flex-row">
+      <div className="flex flex-row bg-gray-100 h-screen">
         <AppSidebar />
         <div className="ml-56 w-full">
           <div className="m-auto max-w-7xl w-full">
@@ -16,6 +15,5 @@ function AppLayout() {
           </div>
         </div>
       </div>
-    </div>
   )
 }
