@@ -3,6 +3,7 @@ import { logger } from "hono/logger";
 import { z } from "zod"
 import { zValidator } from "@hono/zod-validator"
 import { serveStatic } from 'hono/bun'
+import { authRoute } from "./routes/auth";
 
 const app = new Hono();
 const api = new Hono();
@@ -27,7 +28,7 @@ const testRoute = testApi.post(
     return c.json({ message: 'Hello, World!' });
 });
 
-const apiRoutes = api.route('/test', testRoute);
+const apiRoutes = api.route('/test', testRoute).route('/auth', authRoute);
 
 app.route('/api', apiRoutes);
 app.use('*', serveStatic({ root: './frontend/dist' }))
