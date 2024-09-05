@@ -87,10 +87,12 @@ export function NavUser({
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
+          <a href="/api/auth/logout">
         <DropdownMenuItem className="gap-2">
           <LogOut className="h-4 w-4 text-muted-foreground" />
           Log out
-        </DropdownMenuItem>
+          </DropdownMenuItem>
+        </a>
       </DropdownMenuContent>
     </DropdownMenu>
   )

@@ -1,22 +1,19 @@
 import { Hono } from "hono";
-import { getUser, kindeServerClient, sessionManager } from "../kinde";
+import { isAuthenticatedMiddleware, kindeClient, sessionManager } from "../kinde";
 
 export const authRoute = new Hono().get("/login", async (c) => {
-    const loginUrl = await kindeServerClient.login(sessionManager);
+    const loginUrl = await kindeClient.login(sessionManager(c));
     return c.redirect(loginUrl.toString());
   }).get("/register", async (c) => {
-    const registerUrl = await kindeServerClient.register(sessionManager);
+    const registerUrl = await kindeClient.register(sessionManager(c));
     return c.redirect(registerUrl.toString());
   }).get("/callback", async (c) => {
-    const callbackUrl = new URL(c.req.url);
-    console.log('callbackUrl data: ', c.req);
-    await kindeServerClient.handleRedirectToApp(sessionManager, callbackUrl);
-    return c.redirect(callbackUrl.toString());
+    await kindeClient.handleRedirectToApp(sessionManager(c), new URL(c.req.url));
+    return c.redirect("/");
   }).get("/logout", async (c) => {
-    const logoutUrl = await kindeServerClient.logout(sessionManager);
-    console.log('logoutUrl data: ', c.req);
+    const logoutUrl = await kindeClient.logout(sessionManager(c));
     return c.redirect(logoutUrl.toString());
-  }).get("/me", getUser, async (c) => {
+  }).get("/me", isAuthenticatedMiddleware, async (c) => {
     const user = c.var.user;
     return c.json({user});
   });
