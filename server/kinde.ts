@@ -47,6 +47,7 @@ export const getUser = createMiddleware<Env>(async (c, next) => {
     }
   
     const user = await kindeServerClient.getUserProfile(sessionManager);
+    console.log('user', user)
     c.set('user', user);
     await next();
   } catch (error) {

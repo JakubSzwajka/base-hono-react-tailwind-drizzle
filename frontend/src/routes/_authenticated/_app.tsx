@@ -1,7 +1,7 @@
 import { AppSidebar } from '@/components/app-sidebar'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/app/_app')({
+export const Route = createFileRoute('/_authenticated/_app')({
   component: AppLayout
 })
 

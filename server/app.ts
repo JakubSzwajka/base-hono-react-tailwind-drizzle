@@ -28,9 +28,9 @@ const testRoute = testApi.post(
     return c.json({ message: 'Hello, World!' });
 });
 
-const apiRoutes = api.route('/test', testRoute).route('/auth', authRoute);
+const apiRoutes = api.basePath('/api').route('/test', testRoute).route('/auth', authRoute);
 
-app.route('/api', apiRoutes);
+app.route('/', apiRoutes);
 app.use('*', serveStatic({ root: './frontend/dist' }))
 app.get('*', serveStatic({ path: './frontend/dist/index.html' }))
 

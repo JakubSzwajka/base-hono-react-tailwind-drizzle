@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+// import { Link } from '@tanstack/react-router'
 
 import { Button } from "@/components/ui/button"
 import {
@@ -8,21 +8,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+// import { Input } from "@/components/ui/input"
+// import { Label } from "@/components/ui/label"
 
 export function LoginForm() {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <Card className="max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">👋 Hello there!</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            First, let's get you logged in.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
+          {/* <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -40,11 +40,13 @@ export function LoginForm() {
                 </Link>
               </div>
               <Input id="password" type="password" required />
-            </div>
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
-            <Button variant="outline" className="w-full" disabled>
+            </div> */}
+            <a href="/api/auth/login">
+              <Button type="submit" className="w-full">
+                Login
+              </Button>
+            </a>
+            {/* <Button variant="outline" className="w-full" disabled>
               Login with Google
             </Button>
           </div>
@@ -53,7 +55,7 @@ export function LoginForm() {
             <Link href="#" className="underline">
               Sign up
             </Link>
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </div>
