@@ -15,6 +15,6 @@ export const authRoute = new Hono().get("/login", async (c) => {
     return c.redirect(logoutUrl.toString());
   }).get("/me", isAuthenticatedMiddleware, async (c) => {
     const user = c.var.user;
-    return c.json({user});
+    return c.json(user);
   });
   

@@ -10,7 +10,7 @@ function AppLayout() {
       <div className="flex flex-row bg-gray-100 h-screen">
         <AppSidebar />
         <div className="ml-56 w-full">
-          <div className="m-auto max-w-7xl w-full">
+          <div className="m-auto max-w-7xl w-full h-full">
             <Outlet />
           </div>
         </div>

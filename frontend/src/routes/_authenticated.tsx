@@ -3,7 +3,7 @@ import { userQueryOptions } from '@/lib/api'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 const Component = () => {
-    const { user } = Route.useRouteContext()
+    const user = Route.useRouteContext()
     if (!user) {
         return <LoginForm />
     }

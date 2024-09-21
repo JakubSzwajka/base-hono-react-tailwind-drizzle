@@ -4,31 +4,14 @@ import { z } from "zod"
 import { zValidator } from "@hono/zod-validator"
 import { serveStatic } from 'hono/bun'
 import { authRoute } from "./routes/auth";
+import messagesApiRouter from "./routes/messages";
 
 const app = new Hono();
 const api = new Hono();
 
 app.use(logger());
 
-const testPostSchema = z.object({
-  name: z.string(),
-  age: z.number(),
-});
-
-
-const testApi = new Hono();
-const testRoute = testApi.post(
-    '/',
-    zValidator('json', testPostSchema),
-    async (c) => {
-        const { name, age } = c.req.valid('json');
-        return c.json({ name, age });
-    }
-).get('/hello', async (c) => {
-    return c.json({ message: 'Hello, World!' });
-});
-
-const apiRoutes = api.basePath('/api').route('/test', testRoute).route('/auth', authRoute);
+const apiRoutes = api.basePath('/api').route('/auth', authRoute).route('/messages', messagesApiRouter);
 
 app.route('/', apiRoutes);
 app.use('*', serveStatic({ root: './frontend/dist' }))
